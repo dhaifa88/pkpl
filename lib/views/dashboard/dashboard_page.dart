@@ -13,78 +13,77 @@ class DashboardPage extends StatelessWidget {
   DashboardPage({
     required this.userName,
     required this.email,
-    this.division = '',
+    this.division = '', //kmen
   });
 
   void _showOptionsModal(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Align(
-          alignment: Alignment.topLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 56.0, left: 8.0),
-            child: Material(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                width: 200,
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text('User'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        // Navigasi ke halaman detail pengguna
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserDetailPage(
-                              name: userName, // Kirim nama pengguna yang sedang login
-                              email: email, // Kirim email yang benar
-                              division: division, // Kirim divisi yang benar
-                              profilePictureUrl: '', // Kirim URL foto profil jika diperlukan
+        context: context,
+        builder: (BuildContext context) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 56.0, left: 8.0),
+              child: Material(
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                  width: 200,
+                  child: Wrap(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text('User'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          // Navigasi ke halaman detail pengguna
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserDetailPage(
+                                name:
+                                    userName, // Kirim nama pengguna yang sedang login
+                                email: email, // Kirim email yang benar
+                                division: division, // Kirim divisi yang benar
+                                profilePictureUrl:
+                                    '', // Kirim URL foto profil jika diperlukan
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Setting'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SettingsPage(
-                              currentName: userName,
-                              email: email,
+                          );
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text('Setting'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsPage(
+                                currentName: userName,
+                                email: email,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Log Out'),
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/login',
-                          (route) => false
-                        );
-                      },
-                    ),
-                  ],
+                          );
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text('Log Out'),
+                        onTap: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (route) => false);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 
   @override
@@ -122,29 +121,29 @@ class DashboardPage extends StatelessWidget {
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Center(child: Text('No data available'));
-                    }
+                }
 
-                    final docs = snapshot.data!.docs;
+                final docs = snapshot.data!.docs;
 
-                    return ListView.builder(
+                return ListView.builder(
                   padding: EdgeInsets.fromLTRB(4, 20, 4, 10),
-                      itemCount: docs.length,
-                      itemBuilder: (context, index) {
+                  itemCount: docs.length,
+                  itemBuilder: (context, index) {
                     var data = docs[index].data() as Map<String, dynamic>;
                     var email = docs[index].id; // Ambil email dari dokumen ID
                     return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => RoomChatPage(
                               name: data['name'] ?? 'No Name',
-                                    email: email,
-                                    userName: userName,
-                             ),
-                                ),
-                              );
-                            },
+                              email: email,
+                              userName: userName,
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -157,33 +156,34 @@ class DashboardPage extends StatelessWidget {
                           ],
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        height: 70.0, // Atur tinggi Card 
+                        height: 70.0, // Atur tinggi Card
                         child: Card(
                           color: Color.fromARGB(255, 147, 172, 236),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          margin: EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 50.0), // Atur jarak kiri sesuai kebutuhan
-                                    child: Text(
-                                      data['name'] ?? 'No Name',
-                                      
-                                      style: GoogleFonts.khmer(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.white,
-                                      ),
-                                      
+                          margin: EdgeInsets.symmetric(
+                              vertical: 6.0, horizontal: 8.0),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left:
+                                          50.0), // Atur jarak kiri sesuai kebutuhan
+                                  child: Text(
+                                    data['name'] ?? 'No Name',
+                                    style: GoogleFonts.khmer(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white,
                                     ),
-                                    ),
-                                ],
-                              ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                        ),
                       ),
                     );
                   },

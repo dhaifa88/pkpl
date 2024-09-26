@@ -106,11 +106,11 @@ class DashboardBosPage extends StatelessWidget {
                 CollectionReference chatsRef = FirebaseFirestore.instance
                     .collection('bos')
                     .doc(email)
-                    .collection('chats')
-                    ;
+                    .collection('chats');
 
                 return StreamBuilder<QuerySnapshot>(
-                  stream: chatsRef.orderBy('time', descending: true).snapshots(),
+                  stream:
+                      chatsRef.orderBy('time', descending: true).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
@@ -134,7 +134,9 @@ class DashboardBosPage extends StatelessWidget {
                         var isRead = doc['isread'] ?? false;
 
                         return Card(
-                          color: isRead ? Color.fromARGB(255, 147, 172, 236) : Color.fromARGB(255, 147, 172, 236),
+                          color: isRead
+                              ? Color.fromARGB(255, 147, 172, 236)
+                              : Color.fromARGB(255, 147, 172, 236),
                           margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
                           elevation: 3,
                           child: InkWell(
